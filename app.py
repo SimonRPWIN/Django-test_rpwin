@@ -8,3 +8,5 @@ redis_cli = Redis(host='localhost',
 redis_cli.set('iloveu','china')
 
 print(redis_cli.get('iloveu'))
+
+print('ok')
