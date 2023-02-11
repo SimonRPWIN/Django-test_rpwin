@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Simontest',
+    # 方案1：'Simontest',
+    #下面这个第二方案可以改admin页面中app的名字
+    'Simontest.apps.SimontestConfig',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +79,13 @@ WSGI_APPLICATION = 'webapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST':'localhost',
+        'PORT':3306,
+        'USER':'root',
+        'PASSWORD':'Luling@12345',
+        'NAME':'library',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -118,6 +125,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS =[
+    BASE_DIR / 'static' #文件夹名字
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

@@ -1,3 +1,40 @@
+# Redis使用
+
+1.	安装包解压，保存名字为Redis在C盘.
+2.	Cmd运行redis-server.exe redis.windows.conf
+3.	另一个cmd运行redis-cli.exe -h 127.0.0.1 -p 6379
+
+# 基本redis操作指令：
+1.	设置变量 set
+2.	查看获取变量get
+3.	设置过期时间：setex +名字 +时间 +值； 例如：setex img 100 abcd
+4.	查看还有多久有效期：ttl +变量名，例如：ttl img
+5.	查所有数据：keys *
+6.	同时设置多个变量：mset 名字 值 名字 值，例如：mset a 1 b 2
+7.	同时获取多个变量：mget
+8.	手动给一个变量设置过期时间： expire 名字 时间
+9.	查看数据格式：type 名字
+10.	删除变量 del 名字
+11.	哈希数值设置：hset person name simon
+                 Hset person age 30
+12.	获取哈希变量值：hget，例如：hget person age （需要两个key都写进去）
+13.	查哈希所有的key：hkeys person
+14.	查哈希所有的值：hvals person
+15.	哈希删除：hdel person
+16.	更改哈希值：hset person age 20
+17.	列表变量赋值：lpush +名字（从左往右添加）
+18.	列表变量查看：lrange +名字 0 -1
+19.	同理，从右边插入数据到列表：rpush
+20.	列表删除含有相同数值的变量：lrem 名字 + count（正数从左+几个；0全删）+ 删除的数字
+21.	Set可以增删 不能修改，增加集合（set）类型变量：sadd + 名字 + 成员
+     例如：sadd class China
+22.	查看set集合数据：smembers class
+23.	删除set成员：srem class China
+24.	有序集合（zset）添加数据：zdd +集合名字 +score（权重，用于排序）+ 值
+25.	获取zset数据：zrange + 集合名字 + start（0）+end（-1）
+26.	移除数据：zrem + 集合名字 + 值
+
+
 # Django-test_rpwin
 
 # Django基础搭建
@@ -28,4 +65,9 @@ tips：如果不需要/simontest显示，则把path设置为空字符''。
 2. 创建完html之后，回到工程文件夹中的settings.py，找到templates列表变量。找到DIRS列表进行templates添加。'DIRS': [BASE_DIR / 'templates']
 3. 修改对应的simontest小程序中的views index函数中的返回值。改成return render，和FLASK类似。return render(request, 'Simontest/index.html')
 tips: 注意这里的render的第二个参数是html的名字，不是路径。其中第三个参数context类似于flask中的变量，传入html后可以通过{{}}调用。
-4. 
+4. 图片：新建static文件夹，在工程setting中添加staticfiles_DIR,即可访问
+
+# 将数据库从sqlite改成mysql
+1. 进入settings的database列表.engine中sqlite改成mysql,再添加host,port,user,password,schema name etc
+2. 改好后,系统报错: 此时需要再powershell中手动添加pip install mysqlclient.
+3. 需要在虚拟环境下安装,同时安装pip install pymysql
