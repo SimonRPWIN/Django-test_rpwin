@@ -19,4 +19,7 @@
 3. 进行数据库注册：进入Simontest中的admin.py,根据admin.py中我的注释改完，重启Django，刷新界面，即可看到PeopleInfo和Book Info两张表
 4. 在网页中添加book info表，加入三国演义和西游记，此时显示为bookinfo_object，如果要更改显示为书名，需要进入models.py. 然后添加魔术方法__str__, 详细见models.py中注释
 5. 定义试图函数：进入Simontest - views.py，此时类似于Flask中定义@app.route的各种URL路径，具体格式见views.py。接收和返回（request和response）
-6. 
+6. 进入project中的urls.py，添加导入simontest app中的views中的路径函数index。这里必须导包和添加路径path。
+7. 当子应用数目太多时，可以在子应用文件夹中手动新建一个py文件，取名为urls.py。把工程project文件夹中的urls.py中路径移到子应用urls文件中。同样需要导包path和index。同时，要在工程文件夹的urls中添加子应用urls路径(需要导包include)。此时，url的路径变成工程中url+子应用url。例如：http://127.0.0.1:8000/simontest/index/。！！！此步骤相当于把所有的url路径根据不同的app进行分组，然后一起添加到工程的urls文件中。
+tips：如果不需要/simontest显示，则把path设置为空字符''。
+8. 
