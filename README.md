@@ -52,7 +52,7 @@
 
 # Django 站点管理
 1. 执行完上述第11步后，需要输入用户名和密码，此时，进入在powershell中输入：python manage.py createsuperuser （创建超级管理员）
-2. 操作完后获取到创建的用户名和密码。pengp - abc12345，完后进行网页中登录操作
+2. 操作完后获取到创建的用户名和密码。rpwin - abc12345，完后进行网页中登录操作
 3. 进行数据库注册：进入Simontest中的admin.py,根据admin.py中我的注释改完，重启Django，刷新界面，即可看到PeopleInfo和Book Info两张表
 4. 在网页中添加book info表，加入三国演义和西游记，此时显示为bookinfo_object，如果要更改显示为书名，需要进入models.py. 然后添加魔术方法__str__, 详细见models.py中注释
 5. 定义试图函数：进入Simontest - views.py，此时类似于Flask中定义@app.route的各种URL路径，具体格式见views.py。接收和返回（request和response）
@@ -71,3 +71,4 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
 1. 进入settings的database列表.engine中sqlite改成mysql,再添加host,port,user,password,schema name etc
 2. 改好后,系统报错: 此时需要再powershell中手动添加pip install mysqlclient.
 3. 需要在虚拟环境下安装,同时安装pip install pymysql
+4. 此时必须重新进行数据迁移 migrate: python manage.py migrate,此时将丢失之前创建的书名和人名.
