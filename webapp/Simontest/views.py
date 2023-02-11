@@ -10,5 +10,11 @@ from django.http import HttpRequest
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse('ok')
+    #格式：render(request请求，模板路径名字，)
+    
+    context={
+        'name':'Storm is coming'
+    } #context作用是传递数据到html模板
+    return render(request, 'Simontest/index.html',context)
+    # return HttpResponse('ok')
 

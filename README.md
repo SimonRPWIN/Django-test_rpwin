@@ -22,4 +22,10 @@
 6. 进入project中的urls.py，添加导入simontest app中的views中的路径函数index。这里必须导包和添加路径path。
 7. 当子应用数目太多时，可以在子应用文件夹中手动新建一个py文件，取名为urls.py。把工程project文件夹中的urls.py中路径移到子应用urls文件中。同样需要导包path和index。同时，要在工程文件夹的urls中添加子应用urls路径(需要导包include)。此时，url的路径变成工程中url+子应用url。例如：http://127.0.0.1:8000/simontest/index/。！！！此步骤相当于把所有的url路径根据不同的app进行分组，然后一起添加到工程的urls文件中。
 tips：如果不需要/simontest显示，则把path设置为空字符''。
-8. 
+
+# Django 网页模板创建和渲染
+1. templates文件夹必须在最外层中建立。（这里为最外层的webapp）templates 中加入相应的url路径的html
+2. 创建完html之后，回到工程文件夹中的settings.py，找到templates列表变量。找到DIRS列表进行templates添加。'DIRS': [BASE_DIR / 'templates']
+3. 修改对应的simontest小程序中的views index函数中的返回值。改成return render，和FLASK类似。return render(request, 'Simontest/index.html')
+tips: 注意这里的render的第二个参数是html的名字，不是路径。其中第三个参数context类似于flask中的变量，传入html后可以通过{{}}调用。
+4. 
