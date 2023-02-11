@@ -18,4 +18,5 @@
 2. 操作完后获取到创建的用户名和密码。pengp - abc12345，完后进行网页中登录操作
 3. 进行数据库注册：进入Simontest中的admin.py,根据admin.py中我的注释改完，重启Django，刷新界面，即可看到PeopleInfo和Book Info两张表
 4. 在网页中添加book info表，加入三国演义和西游记，此时显示为bookinfo_object，如果要更改显示为书名，需要进入models.py. 然后添加魔术方法__str__, 详细见models.py中注释
-5. 定义试图函数：
+5. 定义试图函数：进入Simontest - views.py，此时类似于Flask中定义@app.route的各种URL路径，具体格式见views.py。接收和返回（request和response）
+6. 
