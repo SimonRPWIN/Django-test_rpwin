@@ -9,6 +9,7 @@ class BookInfo(models.Model): #必须继承父类（Model，系统会自动添�
     readcount = models.IntegerField(default=0)
     commentcount = models.IntegerField(default=0)
     is_delete = models.BooleanField(default=False)
+    
     class Meta:
         db_table = 'bookinfo'
         verbose_name = '书籍管理'

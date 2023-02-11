@@ -73,7 +73,46 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
 3. 需要在虚拟环境下安装,同时安装pip install pymysql
 4. 此时必须重新进行数据迁移 migrate: python manage.py migrate,此时将丢失之前创建的书名和人名. 这之前在mysql中需要有这个名字的库
 
-# Django
+# Django操作
 1. 根据mysql的表,更改子应用的models中的类,然后migrate,可以看到mysql中添加完成相应的database结构
 2. class Meta用于改mysql中的表名
-3. 
+3. 建立mysql中数据库的数据,手动随意添加insert
+4. powershell中打开 python manage.py shell
+5. 输入 from Simontest.models import BookInfo 然后输入 BookInfo.objects.all(), 即可看到bookinfo表中所有内容
+
+# 更删改查
+1. 增加数据:使用objects.create,写好的代码可以直接在shell中查看
+2. 例如在views中写好如下代码:
+        from Simontest.models import BookInfo,PeopleInfo
+        BookInfo.objects.create(
+        name='测试入门',
+        pub_date = '2020-1-1',
+        readcount = 100,)
+    在shell中运行之后,mysql中自动添加这本书.
+3. 修改数据: 类似增加,代码:BookInfo.objects.filter(id=5).update(name='爬虫入门'),同样在shell中运行
+4. 删除数据: BookInfo.objects.get(id=5).delete()或者get换成filter也行
+5. 查询数据: 
+    5.1 get查询:
+            单一数据:book = BookInfo.objects.get(id=1) 这种方法查询如果数据不存在会抛出异常,可使用try except: 例
+                try:
+                    book = BookInfo.objects.get(id=7)
+                except BookInfo.DoesNotExist:
+                    print('结果不存在')
+            多个数据:books = BookInfo.objects.all()
+            查询数据数量: books = BookInfo.objects.all().count()
+    5.2 filter过滤查询:
+            单一使用get
+            多个使用filter
+            多个之外数据exclude
+            例: BookInfo.objects.filter(name__contains='天') ----- 查询包含某个字段的数据
+                BookInfo.objects.filter(name__endswith='天') ----- 查询以...结尾的
+                BookInfo.objects.filter(name__isnullh=True) ----- 查询为空的
+                BookInfo.objects.filter(name__in=['天','地']) ----- 查询是否存在多个中的某一个
+                BookInfo.objects.filter(id__gt=3) -----   查询大于id 3的
+                BookInfo.objects.filter(id__lt=3) -----   查询小于 3的
+                大于等于是gte,小于等于是lte,查询不等于时用exclude方法
+                BookInfo.objects.filter(pub_year__year=1990) -----查询某一年数据
+    5.3 两个条件查询:例如 commentcount大于readcount
+            !首先需要导包: from django.db.models import F
+                BookInfo.objects.filter(readcount__gte=F('commentcount'))
+            
