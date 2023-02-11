@@ -71,4 +71,9 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
 1. 进入settings的database列表.engine中sqlite改成mysql,再添加host,port,user,password,schema name etc
 2. 改好后,系统报错: 此时需要再powershell中手动添加pip install mysqlclient.
 3. 需要在虚拟环境下安装,同时安装pip install pymysql
-4. 此时必须重新进行数据迁移 migrate: python manage.py migrate,此时将丢失之前创建的书名和人名.
+4. 此时必须重新进行数据迁移 migrate: python manage.py migrate,此时将丢失之前创建的书名和人名. 这之前在mysql中需要有这个名字的库
+
+# Django
+1. 根据mysql的表,更改子应用的models中的类,然后migrate,可以看到mysql中添加完成相应的database结构
+2. class Meta用于改mysql中的表名
+3. 

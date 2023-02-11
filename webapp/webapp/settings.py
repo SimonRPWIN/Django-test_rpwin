@@ -84,7 +84,7 @@ DATABASES = {
         'PORT':3306,
         'USER':'root',
         'PASSWORD':'Luling@12345',
-        'NAME':'library',
+        'NAME':'booktest',
         # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
