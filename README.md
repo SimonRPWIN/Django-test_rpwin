@@ -83,12 +83,12 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
 # ORM更删改查
 1. 增加数据:使用objects.create,写好的代码可以直接在shell中查看
 2. 例如在views中写好如下代码:
-        from Simontest.models import BookInfo,PeopleInfo
-        BookInfo.objects.create(
-        name='测试入门',
-        pub_date = '2020-1-1',
-        readcount = 100,)
-    在shell中运行之后,mysql中自动添加这本书.
+    - from Simontest.models import BookInfo,PeopleInfo
+    - BookInfo.objects.create(
+    - name='测试入门',
+    - pub_date = '2020-1-1',
+    - readcount = 100,)
+    - 在shell中运行之后,mysql中自动添加这本书.
 3. 修改数据: 类似增加,代码:BookInfo.objects.filter(id=5).update(name='爬虫入门'),同样在shell中运行
 4. 删除数据: BookInfo.objects.get(id=5).delete()或者get换成filter也行
 5. 查询数据: 
