@@ -38,5 +38,11 @@ from django.db.models import F
 # 查询id为1的书的所有人物信息。
 # PeopleInfo.objects.filter(book__id=1)
 
-def create(request):
+def create(request,create_id):
+    print(create_id)
+    idnum = request.GET
+    print(idnum.get('id'))
+
+    n = {'a':[1,2],'b':2}
+    print(n.get('a'))
     return HttpResponse('create')

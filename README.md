@@ -145,3 +145,22 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
         - PeopleInfo.objects.filter(book__name='天龙')
         - PeopleInfo.objects.filter(book__name__contains='天')
 
+# Django 中接收和请求HttpRequest和HttpResponse
+1. urls文件中path可以用占位符：例如：path('index/<create_id>/',create), 此时在views中create()里需要传参create_id。
+    - 验证用户输入的路径是否正确：
+        - a. 可以通过视图函数里添加if不同的正则判断返回页面。导入正则 import re，使用re.match()方法。
+        - b, 可以如下：path('index/<int:create_id>/',create)，使id输入必须为整数。这之前必须导包：from django.urls import converters。
+            - b.2，如果需要自定义转换器，例如int换成手机验证。则需要导包：from django.urls.converters import register_converter
+            - 同时定义一个class类。copy int的类进行复写，加入相应的正则。手机正则：'1[3-9]\d{9}'。
+            - 最后 register_converter(新的类名，'方法名')。
+2. 获取get请求的字符串，例如：?id=3。使用request.GET,如果Querydict字典中同一个key对应多个values，则不使用key.get('XX')方法，而用key.getlist('XX')。
+3. 获取POST请求表单数据，使用request.POST接收。如果遇到403报错，需要去settings里找到middleware，找到csrf注释掉。
+4. JSON数据必须使用双引号，不能用单引号。
+5. 获取POST请求的JSON数据，不能使用request.POST,而要用request.body,并且需要对JSON数据进行decode处理,然后通过JSON的loads指令转成python字典：
+    这里需要导包JSON
+    - body = request.body
+    - body_str = body.decode()
+    - import json
+    - body_dict = json.loads(body_str)
+6. 接收html请求头信息：request.META
+7. 
