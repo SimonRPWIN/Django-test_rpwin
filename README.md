@@ -80,7 +80,7 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
 4. powershell中打开 python manage.py shell
 5. 输入 from Simontest.models import BookInfo 然后输入 BookInfo.objects.all(), 即可看到bookinfo表中所有内容
 
-# 更删改查
+# ORM更删改查
 1. 增加数据:使用objects.create,写好的代码可以直接在shell中查看
 2. 例如在views中写好如下代码:
         from Simontest.models import BookInfo,PeopleInfo
@@ -106,13 +106,42 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
             多个之外数据exclude
             例: BookInfo.objects.filter(name__contains='天') ----- 查询包含某个字段的数据
                 BookInfo.objects.filter(name__endswith='天') ----- 查询以...结尾的
-                BookInfo.objects.filter(name__isnullh=True) ----- 查询为空的
+                BookInfo.objects.filter(name__isnull=True) ----- 查询为空的
                 BookInfo.objects.filter(name__in=['天','地']) ----- 查询是否存在多个中的某一个
                 BookInfo.objects.filter(id__gt=3) -----   查询大于id 3的
                 BookInfo.objects.filter(id__lt=3) -----   查询小于 3的
                 大于等于是gte,小于等于是lte,查询不等于时用exclude方法
                 BookInfo.objects.filter(pub_year__year=1990) -----查询某一年数据
     5.3 两个条件查询:例如 commentcount大于readcount
-            !首先需要导包: from django.db.models import F
+            ！首先需要导包: from django.db.models import F
                 BookInfo.objects.filter(readcount__gte=F('commentcount'))
-            
+    5.4 并且查询，例如：id>3 并且count小于20：
+        BookInfo.objects.filter(id__gt=3).filter(readcount__lt=20)
+        或者可以写成：BookInfo.objects.filter(id__gt=3,readcount__lt=20)
+    5.5 或者查询 Q查询：
+            ！首先需要导包：from django.db.models import Q
+            语法：BookInfo.objects.filter(Q(id__gt=3)|Q(readcount__lt=20))
+            tips: 或者使用|，并且使用&，
+            非语句查询：BookInfo.objects.filter(~Q(id__gt=3))
+    5.6 聚合函数查询：
+            ！首先导包：from django.db.models import Sum,Max,Min,Avg,Count
+            BookInfo.objects.aggregate(Sum('readcount'))
+    5.7 排序查询：
+            BookInfo.objects.all().order_by('readcount') - 升序
+            BookInfo.objects.all().order_by('-readcount') - 降序
+    5.8 一对多两张表关联查询：
+            book = BookInfo.objects.get(id=1)
+            book.peopleinfo_set.all()
+            查询id为1的书的所有人物信息。
+    5.9 多对一两表关联查询：
+            person = PeopleInfo.objects.get(id=1)
+            person.book.name 查书
+            person.book.pub_date 查时间...etc
+            查id为1的人物对应的书籍信息。
+    5.10 两张表过滤查询：给几个例子
+            BookInfo.objects.filter(peopleinfo__name__exact='郭靖')
+            BookInfo.objects.filter(peopleinfo__description__contains='六')
+
+            PeopleInfo.objects.filter(book__name='天龙')
+            PeopleInfo.objects.filter(book__name__contains='天')
+

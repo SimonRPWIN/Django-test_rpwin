@@ -32,3 +32,11 @@ from Simontest.models import BookInfo,PeopleInfo
 from django.db.models import F
 # 以两个条件查询
 # BookInfo.objects.filter(readcount__gte=F('commentcount'))
+
+# PeopleInfo.objects.filter(book__name__contains='天')
+
+# 查询id为1的书的所有人物信息。
+# PeopleInfo.objects.filter(book__id=1)
+
+def create(request):
+    return HttpResponse('create')
