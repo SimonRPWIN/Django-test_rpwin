@@ -92,7 +92,7 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
 3. 修改数据: 类似增加,代码:BookInfo.objects.filter(id=5).update(name='爬虫入门'),同样在shell中运行
 4. 删除数据: BookInfo.objects.get(id=5).delete()或者get换成filter也行
 5. 查询数据: 
-    5.1 get查询:
+    # 5.1 get查询:
             单一数据:book = BookInfo.objects.get(id=1) 这种方法查询如果数据不存在会抛出异常,可使用try except: 例
                 try:
                     book = BookInfo.objects.get(id=7)
