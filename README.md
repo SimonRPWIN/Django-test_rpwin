@@ -1,3 +1,8 @@
+# Flask 过滤器：
+1. {{ args | safe }} - 禁止转译
+2. 密码加密：hashlib.sha250(password.encode('utf-8')).hexdigest(), 提前导包：import hashlib
+
+
 # Redis使用
 
 1.	安装包解压，保存名字为Redis在C盘.
@@ -163,4 +168,6 @@ tips: 注意这里的render的第二个参数是html的名字，不是路径。�
     - import json
     - body_dict = json.loads(body_str)
 6. 接收html请求头信息：request.META
-7. 
+
+# Cokkies和session
+1. 

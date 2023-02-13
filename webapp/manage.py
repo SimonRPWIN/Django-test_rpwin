@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+import hashlib
 
 def main():
     """Run administrative tasks."""
@@ -17,6 +17,7 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
+# hashlib.sha250(password.encode('utf-8')).hexdigest()
 
 if __name__ == '__main__':
     main()
