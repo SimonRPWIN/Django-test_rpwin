@@ -1,6 +1,25 @@
 # Flask 过滤器：
 1. {{ args | safe }} - 禁止转译
 2. 密码加密：hashlib.sha250(password.encode('utf-8')).hexdigest(), 提前导包：import hashlib
+3. URL装饰器返回参数：同时可以定义类型
+    - @app.route('/admin/<int:user_id>')
+    - def admin(user_id):
+        - return '访问的是：%s' % user_id
+4. get method可以设定默认值：
+    - page = request.args.get('page',default=1, type=int)
+5. 自定义过滤器：以转换时间为例
+    - def datatime_format(value, format="%Y%m%d %H:%M"):
+        - return value.strftime(format)
+    - app.add_template_filter(datetime_format,'dformat')
+    - 然后再jinja2模板中使用：{{ mytime | dformat }}
+6. 绑定配置文件：
+    - 创建config.py，导包 import config.py
+    - app.config.from_object(config)
+7. 定义上下文处理器来储存用户登录信息。
+    - @app.context_processor
+    - def my_context_processor():
+        - return XXX
+8. 退出登录手动清除session：session.cLear()
 
 
 # Redis使用
