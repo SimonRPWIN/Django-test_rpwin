@@ -1,4 +1,4 @@
-# Flask 过滤器：
+# Flask 相关：
 1. {{ args | safe }} - 禁止转译,或者设置{% autoescape off %}。
 2. 密码加密：hashlib.sha250(password.encode('utf-8')).hexdigest(), 提前导包：import hashlib
 3. URL装饰器返回参数：同时可以定义类型
