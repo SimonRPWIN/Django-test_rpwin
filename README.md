@@ -38,14 +38,23 @@
     - <td> {{ input(value='提交', type='submit') }}
 11. Flask-WTF:
     - pip install wtforms
+    建立一个forms.py文件 同时主app.py文件中导包以下：
     - from wtforms import Form,StringField
-    - from wtforms.validators import Length,EqualTo
+    - from wtforms.validators import Length,EqualTo, ValidationError
 
     构造表单验证类：
     - class RegisForm(Form):
         - username = StringField(Validators=[Length(min=3,max=10),message='error'])
         - password = StringField(Validators=[Length(min=6,max=10)])
         - password_re = StringField(Validators=[Length(min=6,max=10),EqualTo("password")])
+        - phone = StringField(validators=[Regexp(r'1[38745]\d{9})'])
+        - email = StringField(Validators=[Email()])
+        双重验证：
+        - capcha = StringField(validators=[Length(4,4)])
+        - def validate_capcha(self,field):
+            - if field.data != '1234':
+                raise ValidationError('wrong')
+
     然后在route中如下定义：
     -   @app.route('/register/')
     -   def register():
@@ -55,8 +64,18 @@
             -   else:
                 -   print(form.errors) #这里会显示message中的error信息
                 -   return 'no'
-12. 自定义wtforms验证
-
+12. 上传以及获取上传文件：
+    request.files.get('file_upload')
+    保存方法：
+    - import os
+    - Upload_path = os.path.join(os.path.dirname(__file__),'images')
+    - file_upload.save(os.path.join(Upload_path,file_upload.filename))
+    获取方法：
+    - @app.route('/images/<filename>/')
+    - def get_image(filename):
+        return send_from_directory(Upload_path,filename)
+13. 限制文件上传格式：
+    - 
 
 # Redis使用
 
