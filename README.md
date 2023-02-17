@@ -75,7 +75,28 @@
         - def get_image(filename):
             return send_from_directory(Upload_path,filename)
 13. 限制文件上传格式：
-    - 
+    - from wtforms import Form,FileField,StringField
+    - from flask_wtf.file import FileRequired,FileAllowed
+    - from wtforms.validators import InputRequired
+    - class UploadFile(Form):
+        - avatar = FileField(validators=[ FileRequired(),FileAllowed([ 'jpg','png','gif'])])
+        - message = StringField(validators=[ InputRequired()])
+    - 同时在app.py的route中定义实例化对象：form = UploadFile(request.form)
+    - 然后此时要把文件获取：
+        - from werkzeug.datastructures import CombinedMultiDict 去把immutable数据组合
+        - 把之前的form改写：
+            - form = UploadFile(CombinedMultiDict([ request.form,request.files]))
+            - if form.validate():
+                - 继续验证下去
+
+14. Cookies and session
+- cookies:
+    - from flask import Response
+    - resp = Response('ABC')
+    - resp.set_cookie('username','abc')
+    - return resp
+- session:
+
 
 # Redis使用
 
