@@ -2,7 +2,7 @@
 1. {{ args | safe }} - 禁止转译,或者设置{% autoescape off %}。
 2. 密码加密：hashlib.sha250(password.encode('utf-8')).hexdigest(), 提前导包：import hashlib
 3. URL装饰器返回参数：同时可以定义类型
-    - @app.route('/admin/<int:user_id>')
+    - @app.route('/admin/< int:user_id>')
     - def admin(user_id):
         - return '访问的是：%s' % user_id
 4. get method可以设定默认值：
@@ -27,15 +27,15 @@
         - return XXX
 8. 退出登录手动清除session：session.cLear()
 9. 同一个@app.URL绑定2种功能：
-    - @app.route('/any(blog,article):url_path/<id>/')
+    - @app.route('/any(blog,article):url_path/< id>/')
 10. 定义一个input宏模板：
     - {% macro input(name, value='', type='tet') %}
-        - <input type='{{ type }}' name='{{ name }}' value='{{ value }}'>
+        - < input type='{{ type }}' name='{{ name }}' value='{{ value }}'>
     - {% endmacro %}
     引用宏时：
-    - <td> {{ input('username') }} </td>
-    - <td> {{ input('username', type='password') }}
-    - <td> {{ input(value='提交', type='submit') }}
+    - < td> {{ input('username') }} </ td>
+    - < td> {{ input('username', type='password') }}
+    - < td> {{ input(value='提交', type='submit') }}
 11. Flask-WTF:
     - pip install wtforms
     建立一个forms.py文件 同时主app.py文件中导包以下：
@@ -71,7 +71,7 @@
     - Upload_path = os.path.join(os.path.dirname(__file__),'images')
     - file_upload.save(os.path.join(Upload_path,file_upload.filename))
     获取方法：
-    - @app.route('/images/<filename>/')
+    - @app.route('/images/< filename>/')
     - def get_image(filename):
         return send_from_directory(Upload_path,filename)
 13. 限制文件上传格式：
