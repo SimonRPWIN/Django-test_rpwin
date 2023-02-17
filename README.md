@@ -1,5 +1,5 @@
 # Flask 过滤器：
-1. {{ args | safe }} - 禁止转译
+1. {{ args | safe }} - 禁止转译,或者设置{% autoescape off %}。
 2. 密码加密：hashlib.sha250(password.encode('utf-8')).hexdigest(), 提前导包：import hashlib
 3. URL装饰器返回参数：同时可以定义类型
     - @app.route('/admin/<int:user_id>')
@@ -12,14 +12,50 @@
         - return value.strftime(format)
     - app.add_template_filter(datetime_format,'dformat')
     - 然后再jinja2模板中使用：{{ mytime | dformat }}
+
+    - 或者用装饰器：
+        - @app.template_filter('dformat')
+        - def datetime_format(value)
+            - value = value.strftime("%Y%m%d %H:%M")
+            - return value
 6. 绑定配置文件：
-    - 创建config.py，导包 import config.py
-    - app.config.from_object(config)
+    - 创建config.py，导包 import config
+    - 主app文件中：app.config.from_object(config)
 7. 定义上下文处理器来储存用户登录信息。
     - @app.context_processor
     - def my_context_processor():
         - return XXX
 8. 退出登录手动清除session：session.cLear()
+9. 同一个@app.URL绑定2种功能：
+    - @app.route('/any(blog,article):url_path/<id>/')
+10. 定义一个input宏模板：
+    - {% macro input(name, value='', type='tet') %}
+        - <input type='{{ type }}' name='{{ name }}' value='{{ value }}'>
+    - {% endmacro %}
+    引用宏时：
+    - <td> {{ input('username') }} </td>
+    - <td> {{ input('username', type='password') }}
+    - <td> {{ input(value='提交', type='submit') }}
+11. Flask-WTF:
+    - pip install wtforms
+    - from wtforms import Form,StringField
+    - from wtforms.validators import Length,EqualTo
+
+    构造表单验证类：
+    - class RegisForm(Form):
+        - username = StringField(Validators=[Length(min=3,max=10),message='error'])
+        - password = StringField(Validators=[Length(min=6,max=10)])
+        - password_re = StringField(Validators=[Length(min=6,max=10),EqualTo("password")])
+    然后在route中如下定义：
+    -   @app.route('/register/')
+    -   def register():
+        -   form = RegisForm(request.form)
+            -   if form.validate():
+                -   return 'ok'
+            -   else:
+                -   print(form.errors) #这里会显示message中的error信息
+                -   return 'no'
+12. 自定义wtforms验证
 
 
 # Redis使用
