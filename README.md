@@ -96,6 +96,48 @@
     - resp.set_cookie('username','abc')
     - return resp
 - session:
+    - 创建session
+        - from flask import session
+        - import os
+        - session[ 'username'] = 'abc'
+        - 同时需要在app.py设置secret_key 进行加密
+        - app.config('SECRET_KEY') = os.urandom(24) - 生成24位随机数
+    - 获取session：
+        - @app.route('/getsession/')
+        - def get_session():
+            - username = session.get('username')
+            - return username or 'none'
+    - 设置session过期时间2小时例子：
+        - app.config[ 'PERMANENT_SESSION_LIFETIME'] = timedelta(hour = 2)
+
+15. 用类创建视图：
+    - from flask import views
+    - class RegisView(views,MethodView):
+        - def get(self):
+            - return render_template('register.html')
+        - def post(self):
+            - pass
+    - app.add_url_rule('/regist', view_func=RegisView.as_view('regist'))
+
+16. Login required 装饰器：
+    - from functools import wraps
+    - from flask import session, redirect, url_for
+
+    - def login_required(func):
+        - @wraps(func)
+        - def wrapper(*args,**kwargs):
+            - user_id = session.get('user_id')
+            - if user_id:
+                - return func(*args,**kwargs)
+            - else:
+                - return redirect(url_for('login'))
+    - 视图函数中：
+        - class XXXXXView(views,MethodView):
+            - decorators = [ login_required]
+            - def get(self):.....
+            - def post(self):.....
+
+
 
 
 # Redis使用
