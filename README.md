@@ -53,7 +53,7 @@
         - capcha = StringField(validators=[Length(4,4)])
         - def validate_capcha(self,field):
             - if field.data != '1234':
-                raise ValidationError('wrong')
+                - raise ValidationError('wrong')
 
     然后在route中如下定义：
     -   @app.route('/register/')
