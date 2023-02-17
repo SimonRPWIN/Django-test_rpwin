@@ -65,15 +65,15 @@
                 -   print(form.errors) #这里会显示message中的error信息
                 -   return 'no'
 12. 上传以及获取上传文件：
-    request.files.get('file_upload')
-    保存方法：
-    - import os
-    - Upload_path = os.path.join(os.path.dirname(__file__),'images')
-    - file_upload.save(os.path.join(Upload_path,file_upload.filename))
-    获取方法：
-    - @app.route('/images/< filename>/')
-    - def get_image(filename):
-        return send_from_directory(Upload_path,filename)
+    - request.files.get('file_upload')
+    - 保存方法：
+        - import os
+        - Upload_path = os.path.join(os.path.dirname(__file__),'images')
+        - file_upload.save(os.path.join(Upload_path,file_upload.filename))
+    - 获取方法：
+        - @app.route('/images/< filename>/')
+        - def get_image(filename):
+            return send_from_directory(Upload_path,filename)
 13. 限制文件上传格式：
     - 
 
