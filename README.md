@@ -21,6 +21,7 @@
 6. 绑定配置文件：
     - 创建config.py，导包 import config
     - 主app文件中：app.config.from_object(config)
+    - 或者直接在app.py中：以session的密钥为例：app.config['SECRET_KEY']='SADASDSADASD'
 7. 定义上下文处理器来储存用户登录信息。
     - @app.context_processor
     - def my_context_processor():
@@ -137,8 +138,48 @@
             - def get(self):.....
             - def post(self):.....
 
+17. CSRF 攻击防御：
+    - from flask_wtf import CSRFProtect
+    - CSRFProtect(app)
+    - html 文件中添加隐藏表单：< input type='hidden' name='csrf_token' value='{{csrf_token()}}'> 
 
+18. 钩子函数：
+    - 1. @app.before_first_request
+    -    def first_request():
+        - print(XXXX)在执行第一个url之前会运行此函数。
+    - 2. @app.before_request
+    -    例子：绑定g对象(global变量)进行session保持：
 
+    - @app.route('/')
+    - def index():
+    -   username = request.args.get('username')
+    -   g.username = username
+        - if hasattr(g,'user'):
+            - print(g.user)
+        - return 'abc'
+    
+    - @app.route('/list/')
+    - def my_list():
+        - session['user_id'] = 1
+        - return 'abc'
+
+    - @app.before_request
+    - def before_request():
+    -   user_id = session.get('user_id')
+    -   if user_id:
+        -   g.user = 'abcd...'
+
+19. 渲染模板时的钩子函数，用于多个url传递同个参数：
+    - @app.context_processor
+    - def context_processor():
+        - if hasattr(g,'user'):
+            - return {'current_user':g.user}
+        - else:
+            - return {}
+20. 报错页面渲染处理钩子函数：
+    - @app.errorhandler(400)
+    - def server_error(error):
+    -   return render_template('xxx.html')
 
 # Redis使用
 
